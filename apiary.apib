@@ -8,24 +8,61 @@ Snapito API Image Generation
 
 Introduction text here
 
-## Image, Quick Format [/{type}/{key}/{url}]
-### Get Image [GET]
-+ Response 200 
+NB: All image retrieval API calls will actually return a redirect to either a freshly generated image or a copy in the CDN. The documentation for image retrieval
+
+## Image, Simple Request [/{type}/{key}/{url}]
+### Get Image - Redirect [GET]
+
+Testing testing
+
 + Parameters
-    + type (required, string) ... web, desktop or mobile
-    + key (required, string) ... Key
-    + url (required, url) ... URL to snapshot (no parameters, path or prefix, just domain name)
     
+    + type (required, string, `web`) ... web, desktop or mobile
+    + key (required, string, `DOCS123`) ... Key
+    + url (required, url, `google.com`) ... URL to snapshot (no parameters, path or prefix, just domain name)
+    
++ Response 200 
+
+    + Headers
+    
+            X-Snapito-Contains-Flash : Which slows down rendering
+            X-Snapito-Image-Scale-Only : true
+            X-Snapito-URL-Used : http://google.com
+            X-Snapito-Blocked-Temporarily : Reason
+            X-Snapito-Host-Blocked-Temporarily : Reason
+            X-Snapito-Blocked-Invalid-URL : Reason
+            X-Snapito-Verification-Errors : Details
+            X-Snapito-URL-Check-Failure : Reason
+            X-Snapito-URL-Check-Failure-Status-Code : 404
+            X-Snapito-Cache-Key : ...
+    
+
 ## Image, Specific Format [/{?url,type,key,delay,freshness}]
 ### Get Image [GET]
-+ Response 302 
-+ Parameters
-    + type (required, string, `png`) ... web, desktop or mobile
-    + key (required, string) ... Key
-    + delay (required, integer,`60`) ... Delay in seconds before taking snapshot
-    + freshness (required, integer,`86400`) ... Maximum age in seconds the image can be, allows caching.
-    + url (required, url) ... URL to snapshot (no parameters, path or prefix, just domain name)
 
++ Parameters
+    + type (optional, string, `png`) ... web, desktop or mobile
+    + key (required, string) ... Key
+    + delay (optional, integer,`60`) ... Delay in seconds before taking snapshot
+    + freshness (optional, integer,`86400`) ... Maximum age in seconds the image can be, allows caching.
+    + url (required, url,`http://google.com`) ... URL to snapshot 
+    
++ Response 200 
+
+    + Headers
+
+            X-Snapito-Contains-Flash : Which slows down rendering
+            X-Snapito-Image-Scale-Only : true
+            X-Snapito-URL-Used : http://google.com
+            X-Snapito-Blocked-Temporarily : Reason
+            X-Snapito-Host-Blocked-Temporarily : Reason
+            X-Snapito-Blocked-Invalid-URL : Reason
+            X-Snapito-Verification-Errors : Details
+            X-Snapito-URL-Check-Failure : Reason
+            X-Snapito-URL-Check-Failure-Status-Code : 404
+            X-Snapito-Cache-Key : ...
+    
+     
 ### Create a Note [POST]
 + Request (application/json)
 
@@ -54,3 +91,4 @@ A single Note object with all its details
 
 ### Remove a Note [DELETE]
 + Response 204
+
