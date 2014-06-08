@@ -15,16 +15,6 @@ NB: All image retrieval API calls will actually return a redirect to either a fr
 
 Testing testing
 
-+ Parameters
-    
-    + type (required, string, `web`) ... web, desktop or mobile
-    + key (required, string, `DOCS123`) ... Key
-    + url (required, url, `google.com`) ... URL to snapshot (no parameters, path or prefix, just domain name)
-    
-+ Response 200 
-
-    + Headers
-    
             X-Snapito-Contains-Flash : Which slows down rendering
             X-Snapito-Image-Scale-Only : true
             X-Snapito-URL-Used : http://google.com
@@ -35,6 +25,19 @@ Testing testing
             X-Snapito-URL-Check-Failure : Reason
             X-Snapito-URL-Check-Failure-Status-Code : 404
             X-Snapito-Cache-Key : ...
+
+
++ Parameters
+    
+    + type (required, string, `web`) ... web, desktop or mobile
+    + key (required, string, `DOCS123`) ... Key
+    + url (required, url, `google.com`) ... URL to snapshot (no parameters, path or prefix, just domain name)
+    
++ Response 302 
+
+    + Headers
+    
+            Location: http://cdn.snapito.com/long-lived-5-2.12-bbc_com-66acc4d73c956819502537c1b96497eff8524af3.png
     
 
 ## Image, Specific Format [/{?url,type,key,delay,freshness}]
