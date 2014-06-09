@@ -20,14 +20,16 @@ public class RunApiTest {
     @Test
     public void test() {
         RestAssured.baseURI = apiHost;
-        RestAssured.port=80;
+        RestAssured.port = 80;
         ResponseSpecBuilder validImageBuilder = new ResponseSpecBuilder();
         validImageBuilder.expectStatusCode(200);
         validImageBuilder.expectContentType("image/png");
         ResponseSpecification validImage = validImageBuilder.build();
 
-        for(String host : Arrays.asList("google.com", "bbc.com", "cnn.com") ) {
-            given().param("url", host).when().get().then().spec(validImage);
+        for (String host : Arrays.asList("google.com", "bbc.com", "cnn.com")) {
+            for (int freshness : Arrays.asList(-1, 0, 1, 60)) {
+                given().param("url", host).param("freshness", freshness).when().get().then().spec(validImage);
+            }
         }
     }
 }

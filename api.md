@@ -1,0 +1,91 @@
+FORMAT: 1A
+HOST: http://api.snapito.com
+
+# Snapito API
+Snapito API Image Generation
+
+# Snapit API Root [/]
+
+Introduction text should go here
+
+NB: All image retrieval API calls will actually return a redirect to either a freshly generated image or a copy in the CDN. The documentation for image retrieval
+
+## Image, Simple Request [/{type}/{key}/{size}/{url}]
+### Get Image - Redirect [GET]
+
+Possible informational headers when you retrieve a freshly rendered image (i.e. it does not originate from http://cdn.snapito.com) include:
+
+            X-Snapito-Contains-Flash : Which slows down rendering
+            X-Snapito-Image-Scale-Only : true
+            X-Snapito-URL-Used : http://google.com
+            X-Snapito-Blocked-Temporarily : Reason
+            X-Snapito-Host-Blocked-Temporarily : Reason
+            X-Snapito-Blocked-Invalid-URL : Reason
+            X-Snapito-Verification-Errors : Details
+            X-Snapito-URL-Check-Failure : Reason
+            X-Snapito-URL-Check-Failure-Status-Code : 404
+            X-Snapito-Source-Content-Type: text/html
+            X-Snapito-Bad-Content: Details
+            X-Snapito-Cache-Key : ...
+            
+            
+Example URL: http://api.snapito.com/web/DOCS123/800x600/bbc.com
+
++ Parameters
+    
+    + type (required, string, `web`) ... web, desktop or mobile
+    + key (required, string, `DOCS123`) ... Key
+    + size (optional, string, `800x600`) ...
+        
+    
+        | Size Code | Description       | Dimensions |
+        |-----------|-------------------|------------|
+        | full      | Full Page         | 1024x????  |
+        | lc        | Large Clipped     | 1024x768   |
+        | mc        | Medium Clipped    | 800x640    |
+        | sc        | Small Clipped     | 320x240    |
+        | tc        | Thumbnail Clipped | 80x50      |
+        | th        | Thumbnail         | 80x??      |
+        
+        Can be either a preset value (see table above) or (width)x(height)
+    + url (required, url, `bbc.com`) ... URL to snapshot (no parameters, path or prefix, just domain name)
+            
+    
++ Response 302 
+    Note the CDN redirect header is only added when you are being forwarded to our CDN, i.e. the image has already been taken and is stored there.  
+        
+                    X-Snapito-CDN-Redirect: http://cdn.snapito.com/long-lived-5-2.12-bbc_com-66acc4d73c956819502537c1b96497eff8524af3.png
+            
+    + Headers
+    
+            Location: http://cdn.snapito.com/long-lived-5-2.12-bbc_com-66acc4d73c956819502537c1b96497eff8524af3.png
+
+            
+
+
+## Image, Specific Format [/{?url,type,key,delay,freshness}]
+### Get Image [GET]
+
++ Parameters
+    + type (optional, string, `png`) ... web, desktop or mobile
+    + key (required, string) ... Key
+    + delay (optional, integer,`60`) ... Delay in seconds before taking snapshot
+    + freshness (optional, integer,`86400`) ... Maximum age in seconds the image can be, allows caching.
+    + url (required, url,`http://google.com`) ... URL to snapshot 
+    
++ Response 200 
+
+    + Headers
+
+            X-Snapito-Contains-Flash : Which slows down rendering
+            X-Snapito-Image-Scale-Only : true
+            X-Snapito-URL-Used : http://google.com
+            X-Snapito-Blocked-Temporarily : Reason
+            X-Snapito-Host-Blocked-Temporarily : Reason
+            X-Snapito-Blocked-Invalid-URL : Reason
+            X-Snapito-Verification-Errors : Details
+            X-Snapito-URL-Check-Failure : Reason
+            X-Snapito-URL-Check-Failure-Status-Code : 404
+            X-Snapito-Cache-Key : ...
+    
+     

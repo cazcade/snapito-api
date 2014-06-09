@@ -1,0 +1,6 @@
+dependencies:
+  override:
+    - npm install -g dredd
+test:
+  post:
+    - dredd api.md http://api.snapito.com
