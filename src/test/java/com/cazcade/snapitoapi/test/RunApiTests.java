@@ -20,6 +20,7 @@ public class RunApiTests {
     @Test
     public void test() {
         RestAssured.baseURI = apiHost;
+        RestAssured.port=80;
         ResponseSpecBuilder validImageBuilder = new ResponseSpecBuilder();
         validImageBuilder.expectStatusCode(200);
         validImageBuilder.expectContentType("image/png");
