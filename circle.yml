@@ -20,7 +20,7 @@ deployment:
     branch: staging
     commands:
       - ./deploy_staging.sh
-   dev:
+   development:
      branch: dev
      commands:
        - ./deploy_dev.sh
