@@ -13,7 +13,7 @@ import static com.jayway.restassured.RestAssured.given;
  * @author <a href="http://uk.linkedin.com/in/neilellis">Neil Ellis</a>
  * @todo document.
  */
-public class RunApiTests {
+public class RunApiTest {
     public static final String env = System.getProperty("target.subdomain", "api");
     public static final String apiHost = "http://" + env + ".snapito.com/";
 
