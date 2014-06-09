@@ -1,6 +1,27 @@
+machine:
+  java:
+    version: oraclejdk8
+
 dependencies:
-  override:
+  post:
     - npm install -g dredd
+    - npm install -g aglio
+
 test:
   post:
-    - dredd api.md http://api.snapito.com
+    - dredd api.md http://${CIRCLE_BRANCH}.api.snapito.com
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./deploy_prod.sh
+  staging:
+    branch: staging
+    commands:
+      - ./deploy_staging.sh
+   dev:
+     branch: dev
+     commands:
+       - ./deploy_dev.sh
+
